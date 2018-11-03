@@ -1,3 +1,5 @@
+import GEOLOCATION from './location.js'
+
 // UI module
 const UI = (function () {
     let menu = document.querySelector('#menu-container')
@@ -47,6 +49,8 @@ const UI = (function () {
         loadApp
     }
 })()
+
+GEOLOCATION
 
 //Load app
 window.onload = function () {
