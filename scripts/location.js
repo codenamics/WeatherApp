@@ -1,3 +1,4 @@
+import WEATHER from './weather'
 const GETLOCATION = (function () {
     let location;
     const loactionInput = document.querySelector('#location-input'),
@@ -8,7 +9,8 @@ const GETLOCATION = (function () {
         loactionInput.value = ''
         addCityBtn.setAttribute('disabled', 'true')
         addCityBtn.classList.add('disabled')
-        console.log(location)
+
+        WEATHER.getWeather(location)
     }
 
     loactionInput.addEventListener('input', function () {

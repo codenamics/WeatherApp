@@ -1,4 +1,4 @@
-import GEOLOCATION from './location.js'
+import GETLOCATION from './location.js'
 
 // UI module
 const UI = (function () {
@@ -50,9 +50,11 @@ const UI = (function () {
     }
 })()
 
-GEOLOCATION
+GETLOCATION
 
 //Load app
 window.onload = function () {
     UI.showApp()
 }
+
+export default UI
