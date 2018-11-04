@@ -40,13 +40,29 @@ const UI = (function () {
             console.log('Unknown state on lower panel')
         }
     }
+    const displayWeatherData = (data, location) => {
+        let {
+            icon,
+            summary
+        } = data.currently
+        document.querySelectorAll(".location-label").forEach(el =>
+            el.innerHTML = location
+        )
+        console.log(icon)
+        document.querySelector('main').style.backgroundImage = `url("./assets/images/bg-images/${icon}.jpg")`
+        // document.querySelector("#currentlyIcon").setAttribute('src', `./assets/images/summary-icons/${icon}-white.png`)
+        // document.querySelector("#summary-label").innerHTML = summary
+
+        showApp()
+    }
     //Button menu toogle
     document.querySelector('#open-menu-btn').addEventListener('click', _showMenu)
     document.querySelector('#close-menu-btn').addEventListener('click', _hideMenu)
     document.querySelector('#toggle-hourly-weather').addEventListener('click', _toogleHourlyWeather)
     return {
         showApp,
-        loadApp
+        loadApp,
+        displayWeatherData
     }
 })()
 

@@ -11,9 +11,11 @@ const WEATHER = (function () {
     const _getDarkSkyURL = (lat, lng) =>
         `https://api.darksky.net/forecast/${darkSkyKey}/${lat},${lng}`
 
-    const _fetchWeatherData = (url) => {
+    const _fetchWeatherData = (url, location) => {
         axios.get(url)
-            .then(res => console.log(res))
+            .then(res => {
+                UI.displayWeatherData(res.data, location)
+            })
             .catch(err => console.log(err))
     }
 
@@ -29,7 +31,7 @@ const WEATHER = (function () {
                         lng
                     } = res.data.results[0].geometry
                     let darkskyURL = _getDarkSkyURL(lat, lng)
-                    _fetchWeatherData(darkskyURL)
+                    _fetchWeatherData(darkskyURL, location)
                 }
 
             ).catch(err => console.log(err))
