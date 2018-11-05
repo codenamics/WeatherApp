@@ -37,19 +37,27 @@ const UI = (function () {
         } else {
             console.log('Unknown state on lower panel')
         }
+
     }
     const displayWeatherData = (data, location) => {
         let {
             icon,
-            summary
+            summary,
+            humidity,
+            temperature,
+            windSpeed
         } = data.currently
         document.querySelectorAll(".location-label").forEach(el =>
             el.innerHTML = location
         )
+        console.log(data.currently)
         document.querySelector('main').style.backgroundImage = `url("./assets/images/bg-images/${icon}.jpg")`
         document.querySelector("#currentlyIcon").setAttribute('src', `./assets/images/summary-icons/${icon}-white.png`)
         document.querySelector("#summary-label").innerHTML = summary
-
+        document.querySelector("#humidity").innerHTML = Math.round(humidity * 100) + '%';
+        document.querySelector("#degrees-label").innerHTML = Math.round((temperature - 32) * 5 / 9) + '&#176;'
+        document.querySelector("#wind-speed-label").innerHTML = (windSpeed * 1.6093).toFixed(1) + ' kph';
+        _hideMenu()
         showApp()
     }
     //Button menu toogle
