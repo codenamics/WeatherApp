@@ -8,7 +8,33 @@ Weather Application based on DarkSky and GeoCage.
 * [x] **Parcel** 
 
 
-in progress
+### Setup
+
+Make sure that you have installed ParcelJS if not
+
+```bash
+$ npm install parcel -g
+```
+then
+
+```bash
+$ git clone or download
+```
+
+Go to project direction
+
+Install dependencies
+
+```bash
+$ npm install
+
+```
+
+Run server
+
+```bash
+$ parcel index.html
+```
 
 
 
