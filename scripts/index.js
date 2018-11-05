@@ -40,6 +40,8 @@ const UI = (function () {
 
     }
     const displayWeatherData = (data, location) => {
+        let weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+        let output = ''
         let {
             icon,
             summary,
@@ -47,16 +49,46 @@ const UI = (function () {
             temperature,
             windSpeed
         } = data.currently
+        const {
+            hourly,
+            daily
+        } = data
         document.querySelectorAll(".location-label").forEach(el =>
             el.innerHTML = location
         )
-        console.log(data.currently)
+        console.log(data.hourly)
         document.querySelector('main').style.backgroundImage = `url("./assets/images/bg-images/${icon}.jpg")`
         document.querySelector("#currentlyIcon").setAttribute('src', `./assets/images/summary-icons/${icon}-white.png`)
         document.querySelector("#summary-label").innerHTML = summary
         document.querySelector("#humidity").innerHTML = Math.round(humidity * 100) + '%';
         document.querySelector("#degrees-label").innerHTML = Math.round((temperature - 32) * 5 / 9) + '&#176;'
         document.querySelector("#wind-speed-label").innerHTML = (windSpeed * 1.6093).toFixed(1) + ' kph';
+
+        daily.data.forEach((day) => {
+            console.log(day)
+            let days = weekDays[new Date(day.time * 1000).getDay()]
+            let temp = Math.round((day.temperatureMax - 32) * 5 / 9) + '&#176;' + '/' + Math.round((day.temperatureMin - 32) * 5 / 9) + '&#176;';
+            console.log(days)
+            output += `
+                <li class='list-daily-item'>
+                <div id="daily-row" class="flex-container">
+                    <div>
+                        <h1 class="daily-heading">${days}</h1>
+                    </div>
+                    <div class="flex-container">
+                        <div class="right">
+                            <p>${temp}</p>
+                        </div>
+                        <div class="right">
+                            <img class="icon-sm-30" src="./assets/images/summary-icons/${day.icon}-white.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </li>
+        `
+        })
+        document.querySelector('#list-daily').innerHTML = output
+
         _hideMenu()
         showApp()
     }

@@ -243,6 +243,16 @@ button {
     transform: translateY(-50%);
 }
 
+.space {
+    justify-content: space-between;
+    flex-direction: column;
+
+}
+
+.daily-heading {
+    text-align: left;
+}
+
 /* display  */
 
 .display-none {
@@ -263,12 +273,25 @@ button {
     width: 30px;
 }
 
+.right {
+    text-align: right;
+}
+
+.list-daily-item {
+    margin-bottom: 15px;
+}
+
 /* encapsulating */
 
 .flex-container {
     display: flex;
     width: 100%;
     align-items: center;
+
+}
+
+#wether-con {
+    flex-direction: column;
 }
 
 .flex-container>* {
