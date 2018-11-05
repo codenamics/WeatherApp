@@ -1,5 +1,3 @@
-import GETLOCATION from './location.js'
-
 // UI module
 const UI = (function () {
     let menu = document.querySelector('#menu-container')
@@ -48,10 +46,9 @@ const UI = (function () {
         document.querySelectorAll(".location-label").forEach(el =>
             el.innerHTML = location
         )
-        console.log(icon)
         document.querySelector('main').style.backgroundImage = `url("./assets/images/bg-images/${icon}.jpg")`
-        // document.querySelector("#currentlyIcon").setAttribute('src', `./assets/images/summary-icons/${icon}-white.png`)
-        // document.querySelector("#summary-label").innerHTML = summary
+        document.querySelector("#currentlyIcon").setAttribute('src', `./assets/images/summary-icons/${icon}-white.png`)
+        document.querySelector("#summary-label").innerHTML = summary
 
         showApp()
     }
@@ -66,11 +63,75 @@ const UI = (function () {
     }
 })()
 
-GETLOCATION
+const GETLOCATION = (function () {
+    let location;
+    const loactionInput = document.querySelector('#location-input'),
+        addCityBtn = document.querySelector('#add-city-btn')
+
+    const _addCity = () => {
+        location = loactionInput.value;
+        loactionInput.value = ''
+        addCityBtn.setAttribute('disabled', 'true')
+        addCityBtn.classList.add('disabled')
+
+        WEATHER.getWeather(location)
+    }
+
+    loactionInput.addEventListener('input', function () {
+        let inputText = this.value.trim()
+
+        if (inputText != '') {
+            addCityBtn.removeAttribute('disabled')
+            addCityBtn.classList.remove('disabled')
+        } else {
+            addCityBtn.setAttribute('disabled', 'true')
+            addCityBtn.classList.add('disabled')
+        }
+    })
+    addCityBtn.addEventListener('click', _addCity)
+})()
+
+const WEATHER = (function () {
+    const darkSkyKey = '3e5d5d1a313d18f0363f3e036105a2cf',
+        geoCodeKey = '9b95c77edff94cbda08fc3e2a1688059'
+    const _getGeoCodeURL = (location) =>
+        `https://api.opencagedata.com/geocode/v1/json?q=${location}&key=${geoCodeKey}`
+
+
+    const _getDarkSkyURL = (lat, lng) =>
+        `https://api.darksky.net/forecast/${darkSkyKey}/${lat},${lng}`
+
+    const _fetchWeatherData = (url, location) => {
+        axios.get(url)
+            .then(res => {
+                UI.displayWeatherData(res.data, location)
+            })
+            .catch(err => console.log(err))
+    }
+
+    const getWeather = (location) => {
+        UI.loadApp()
+
+        let geocodeURL = _getGeoCodeURL(location)
+
+        axios.get(geocodeURL)
+            .then((res) => {
+                    const {
+                        lat,
+                        lng
+                    } = res.data.results[0].geometry
+                    let darkskyURL = _getDarkSkyURL(lat, lng)
+                    _fetchWeatherData(darkskyURL, location)
+                }
+
+            ).catch(err => console.log(err))
+    }
+    return {
+        getWeather
+    }
+})()
 
 //Load app
 window.onload = function () {
     UI.showApp()
 }
-
-export default UI
