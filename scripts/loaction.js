@@ -11,7 +11,7 @@ const GETLOCATION = (function () {
         addCityBtn.setAttribute('disabled', 'true')
         addCityBtn.classList.add('disabled')
 
-        WEATHER.getWeather(location)
+        WEATHER.getWeather(location, true)
     }
 
     loactionInput.addEventListener('input', function () {

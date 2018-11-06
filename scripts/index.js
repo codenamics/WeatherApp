@@ -3,6 +3,7 @@ import sumIconsWhite from '../assets/images/summary-icons/*-white.png'
 import sumIconsGrey from '../assets/images/summary-icons/*-grey.png'
 import WEATHER from '../scripts/weather'
 import LOCATION from '../scripts/loaction'
+import LOCALSTORE from './localStorage';
 
 // UI module
 const UI = (function () {
@@ -138,5 +139,13 @@ export default UI
 
 //Load app
 window.onload = function () {
-    UI.showApp()
+    LOCALSTORE.get()
+    let cities = LOCALSTORE.getSavedCities()
+    if (cities.length !== 0) {
+        WEATHER.getWeather(cities[cities.length - 1])
+    } else {
+        UI.showApp()
+    }
+
+
 }
