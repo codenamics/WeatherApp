@@ -23,13 +23,6 @@ $ git clone or download
 
 Go to project direction
 
-Install dependencies
-
-```bash
-$ npm install
-
-```
-
 Run server
 
 ```bash
